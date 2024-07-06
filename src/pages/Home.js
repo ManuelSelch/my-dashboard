@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
-import DashboardCard from './widgets/DashboardCard';
+import DashboardCard from '../widgets/DashboardCard';
 
 const Home = () => {
   return (
