@@ -5,8 +5,6 @@ import useFetchProject from '../hooks/useFetchProject';
 import useFetchMilestones from '../hooks/useFetchMilestones';
 import useFetchIssues from '../hooks/useFetchIssues';
 
-const url = process.env.REACT_APP_TAIGA_URL + '/api/v1';
-
 
 const options = {
     colors : ['#758694', '#9CDBA6', '#E90074'],
@@ -79,7 +77,7 @@ const TaigaProjectDetails = () => {
 
 
     const issues = useFetchIssues();
-    const projectIssues = issues.filter(i => i.project == project.id);
+    const projectIssues = issues.filter(i => i.project === project.id);
 
     return (
         <div className="p-10">
