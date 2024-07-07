@@ -3,7 +3,7 @@ import apiService from '../services/apiService';
 import useLocalStorage from './useLocalStorage';
 
 const useLogin = () => {
-    const [token, setToken] = useLocalStorage("taigaToken");
+    const [token, setToken] = useLocalStorage("taigaToken", "");
     const [data, setData] = useState(null);
 
     useEffect(() => {
