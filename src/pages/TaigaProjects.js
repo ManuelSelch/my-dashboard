@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react';
+import ProjectCard from '../widgets/ProjectCard';
 
 const url = process.env.REACT_APP_TAIGA_URL + '/api/v1';
 
@@ -46,27 +47,17 @@ const TaigaProjects = () => {
 
   return (
     <div className='p-10'>
+
+
       <p className='text-4xl font-bold'>My Projects</p>
 
-        <div className='grid grid-cols-2 grid-flow-row gap-4 pt-5'>
+      
+
+      <div class="flex flex-wrap">
         {projects.map((project) => (
-          <div className="card bg-base-100 w-96 shadow-xl mx-auto">
-            <figure>
-              <img
-                src={project.logo_big_url}
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{project.name}</h2>
-              <p>{project.description}</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">More</button>
-              </div>
-            </div>
-          </div>
-          
+          <ProjectCard project={project} />
         ))}
-        </div>
+      </div>
 
     </div>
   );
