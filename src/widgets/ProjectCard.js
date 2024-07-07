@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 const ProjectCard = ({project}) => {
   return (
-    <div className="flex flex-wrap w-1/4 max-lg:w-1/3 max-md:w-1/2 p-1 md:p-2">
+    <div className="flex flex-wrap w-1/3 max-lg:w-1/2 max-md:w-full p-1 md:p-2">
         <div className="card bg-base-100 w-96 shadow-xl mx-auto">
             <figure>
                 <img
                     src={project.logo_big_url}
-                    alt='project card'
+                    alt='Project Logo'
                 />
             </figure>
             <div className="card-body">

@@ -85,7 +85,7 @@ const TaigaProjectDetails = () => {
 
             <div className="grid grid-cols-2 max-lg:grid-cols-1 pt-10">
                 
-                <div className="grid grid-cols-1 justify-items-center">
+                <div className="grid grid-cols-1 justify-items-center p-10">
                     <Chart
                         options={options}
                         series={series}
