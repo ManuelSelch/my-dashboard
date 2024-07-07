@@ -12,9 +12,9 @@ const useFetchIssues = () => {
             const issues = await apiService.get("issues");
 
             const updatedIssues = issues.map(issue => {
-                const status = statusList.find(s => s.id == issue.status);
-                const type = typeList.find(s => s.id == issue.type);
-                const priority = priorityList.find(s => s.id == issue.priority);
+                const status = statusList.find(s => s.id === issue.status);
+                const type = typeList.find(s => s.id === issue.type);
+                const priority = priorityList.find(s => s.id === issue.priority);
                 return {
                     ...issue,
                     status: status ? status.name : 'unknown',

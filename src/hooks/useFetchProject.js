@@ -14,7 +14,7 @@ const useFetchProject = (slug) => {
 
         fetchData();
 
-    }, []);
+    }, [slug]);
 
     return data;
 };

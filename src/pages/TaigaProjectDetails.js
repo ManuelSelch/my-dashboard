@@ -1,4 +1,3 @@
-import React, { useState, useEffect }  from 'react';
 import { useParams } from 'react-router-dom'
 import Chart from "react-apexcharts";
 
@@ -37,7 +36,7 @@ const TaigaProjectDetails = () => {
 
     const milestones = useFetchMilestones();
 
-    const projectMilestones = milestones.filter(m => m.project == project.id);
+    const projectMilestones = milestones.filter(m => m.project === project.id);
     const milestoneValues = projectMilestones.reverse().map(m => m.total_points ?? 0);
     const milestoneValuesBurndown = []
 
