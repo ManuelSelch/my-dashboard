@@ -8,6 +8,7 @@ const ProjectCard = ({project}) => {
             <figure>
                 <img
                     src={project.logo_big_url}
+                    alt='project card'
                 />
             </figure>
             <div className="card-body">

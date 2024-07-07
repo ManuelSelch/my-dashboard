@@ -24,7 +24,7 @@ const useLogin = () => {
 
         fetchData();
 
-    }, []);
+    }, [setToken]);
 
     return data;
 };

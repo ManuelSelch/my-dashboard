@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React from 'react';
 import ProjectCard from '../widgets/ProjectCard';
 
 import useLogin from '../hooks/useLogin';
@@ -6,7 +6,7 @@ import useFetchProjects from '../hooks/useFetchProjects';
 
 
 const TaigaProjects = () => {
-  const token = useLogin();
+  useLogin();
   const projects = useFetchProjects();
 
   return (
