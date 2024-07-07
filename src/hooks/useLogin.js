@@ -3,7 +3,7 @@ import apiService from '../services/apiService';
 import useLocalStorage from './useLocalStorage';
 
 const useLogin = () => {
-    const [token, setToken] = useLocalStorage("taigaToken", "");
+    const [token, setToken] = useLocalStorage("taigaToken");
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -14,7 +14,8 @@ const useLogin = () => {
                     username: process.env.REACT_APP_TAIGA_USER,
                     password: process.env.REACT_APP_TAIGA_PASS,
                     type:"normal"
-                }
+                },
+                false
             );
 
             setToken(result.auth_token);

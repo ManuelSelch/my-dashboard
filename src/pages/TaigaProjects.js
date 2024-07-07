@@ -17,9 +17,9 @@ const TaigaProjects = () => {
 
       
 
-      <div class="flex flex-wrap pt-10">
+      <div className="flex flex-wrap pt-10">
         {projects.map((project) => (
-          <ProjectCard project={project} />
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
 
