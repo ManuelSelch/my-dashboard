@@ -1,26 +1,73 @@
-import React from 'react';
-import { Typography, List, ListItem, ListItemText } from '@mui/material';
+import React, { useState, useEffect }  from 'react';
 
-// Mock data for Taiga projects
-const projects = [
-  { id: 1, name: 'Project Alpha', description: 'Description for Project Alpha' },
-  { id: 2, name: 'Project Beta', description: 'Description for Project Beta' },
-  { id: 3, name: 'Project Gamma', description: 'Description for Project Gamma' },
-];
+const url = process.env.REACT_APP_TAIGA_URL + '/api/v1';
+
+const login_payload = {
+  username: process.env.REACT_APP_TAIGA_USER,
+  password: process.env.REACT_APP_TAIGA_PASS,
+  type:"normal"
+};
+
+const login_options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(login_payload)
+}
 
 const TaigaProjects = () => {
+  const [token, setToken] = useState("");
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    fetch(url + '/auth', login_options)
+      .then(response => response.json())
+      .then(json => {
+          setToken(json.auth_token);
+
+          const projects_options = {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + json.auth_token
+            }
+          }
+         
+          fetch(url + '/projects', projects_options)
+            .then(response => response.json())
+            .then(json => setProjects(json))
+            .catch(error => console.error(error))
+        }
+      )
+      .catch(error => console.error(error));
+
+  }, []);
+
   return (
-    <div style={{ marginTop: '20px' }}>
-      <Typography variant="h4" gutterBottom>
-        Taiga Project Management
-      </Typography>
-      <List>
+    <div className='p-10'>
+      <p className='text-4xl font-bold'>My Projects</p>
+
+        <div className='grid grid-cols-2 grid-flow-row gap-4 pt-5'>
         {projects.map((project) => (
-          <ListItem key={project.id}>
-            <ListItemText primary={project.name} secondary={project.description} />
-          </ListItem>
+          <div class="card bg-base-100 w-96 shadow-xl mx-auto">
+            <figure>
+              <img
+                src={project.logo_big_url}
+              />
+            </figure>
+            <div class="card-body">
+              <h2 class="card-title">{project.name}</h2>
+              <p>{project.description}</p>
+              <div class="card-actions justify-end">
+                <button class="btn btn-primary">More</button>
+              </div>
+            </div>
+          </div>
+          
         ))}
-      </List>
+        </div>
+
     </div>
   );
 };
