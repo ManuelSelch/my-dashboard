@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <div class="navbar bg-base-100">
+      <div className="navbar bg-base-100">
         <Link className='btn btn-ghost text-xl' to="/">Home</Link>
         <Link className='btn btn-ghost text-xl' to="/taiga">Projects</Link>
       </div>

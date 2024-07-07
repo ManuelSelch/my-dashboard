@@ -50,17 +50,17 @@ const TaigaProjects = () => {
 
         <div className='grid grid-cols-2 grid-flow-row gap-4 pt-5'>
         {projects.map((project) => (
-          <div class="card bg-base-100 w-96 shadow-xl mx-auto">
+          <div className="card bg-base-100 w-96 shadow-xl mx-auto">
             <figure>
               <img
                 src={project.logo_big_url}
               />
             </figure>
-            <div class="card-body">
-              <h2 class="card-title">{project.name}</h2>
+            <div className="card-body">
+              <h2 className="card-title">{project.name}</h2>
               <p>{project.description}</p>
-              <div class="card-actions justify-end">
-                <button class="btn btn-primary">More</button>
+              <div className="card-actions justify-end">
+                <button className="btn btn-primary">More</button>
               </div>
             </div>
           </div>
