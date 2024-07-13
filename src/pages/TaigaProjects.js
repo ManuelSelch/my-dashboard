@@ -1,12 +1,10 @@
 import React from 'react';
 import ProjectCard from '../widgets/ProjectCard';
 
-import useLogin from '../hooks/useLogin';
 import useFetchProjects from '../hooks/useFetchProjects';
 
 
 const TaigaProjects = () => {
-  useLogin();
   const projects = useFetchProjects();
 
   return (

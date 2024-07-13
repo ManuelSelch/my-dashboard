@@ -1,73 +1,17 @@
 import { useParams } from 'react-router-dom'
-import Chart from "react-apexcharts";
+
+import Burndown from '../widgets/Burndown/Burndown';
+import KanbanBoard from '../widgets/Kanban/KanbanBoard';
+import IssuesBoard from '../widgets/Issues/IssuesBoard';
 
 import useFetchProject from '../hooks/useFetchProject';
-import useFetchMilestones from '../hooks/useFetchMilestones';
-import useFetchIssues from '../hooks/useFetchIssues';
 
-
-const options = {
-    colors : ['#758694', '#9CDBA6', '#E90074'],
-    chart: {
-        type: 'area',
-        id: "backlog"
-    },
-
-    stroke: {
-        curve: 'straight'
-    },
-
-    dataLabels: {
-        enabled: false,
-    },
-
-    xaxis: {
-       
-    },
-
-    
-}
 
 const TaigaProjectDetails = () => {
     const { slug } = useParams();
     const project = useFetchProject(slug);
 
-    const milestones = useFetchMilestones();
-
-    const projectMilestones = milestones.filter(m => m.project === project.id);
-    const milestoneValues = projectMilestones.reverse().map(m => m.total_points ?? 0);
-    const milestoneValuesBurndown = []
-
-    const total_milestones = project.total_milestones ?? 10;
-    const total_story_points = project.total_story_points ?? 100;
-
-    var lastValue = total_story_points;
-    milestoneValuesBurndown.push(lastValue);
-    for (let i = 0; i < milestoneValues.length; i++) {
-        const value = lastValue - milestoneValues[i];
-        lastValue = value;
-        milestoneValuesBurndown.push(value);
-    }
-
-    const stepSize = total_story_points / total_milestones;
-
-    // Generate optimal values
-    const optimalValues = [];
-    for (let i = 0; i < total_milestones; i++) {
-        const optimalValue = total_story_points - stepSize * i;
-        optimalValues.push(optimalValue);
-    }
-
-    const series = [
-        {
-            name: "optimal",
-            data: optimalValues
-        },
-        {
-            name: "real",
-            data: milestoneValuesBurndown
-        }
-    ]
+   
     const date = new Date(project.created_date);
     const formattedDate = date.toLocaleDateString('de-DE', {
         year: 'numeric',
@@ -75,9 +19,7 @@ const TaigaProjectDetails = () => {
         day: '2-digit'
     });
 
-
-    const issues = useFetchIssues();
-    const projectIssues = issues.filter(i => i.project === project.id);
+    const projectLink = process.env.REACT_APP_TAIGA_URL + "/project/" + slug;
 
     return (
         <div className="p-10">
@@ -85,13 +27,11 @@ const TaigaProjectDetails = () => {
 
             <div className="grid grid-cols-2 max-lg:grid-cols-1 pt-10">
                 
-                <div className="grid grid-cols-1 justify-items-center p-10">
-                    <Chart
-                        options={options}
-                        series={series}
-                        type="area"
-                        width="500"
-                    />
+                <div className="grid grid-cols-1 justify-items-center">
+                    {project?.id
+                        ?<Burndown project={project.id} total_milestones={project.total_milestones ?? 10} total_story_points={project.total_story_points ?? 10}/>
+                        :<p></p>
+                    }
                 </div>
 
                 <div className="">
@@ -99,10 +39,8 @@ const TaigaProjectDetails = () => {
                         <div className="card-body">
                             <h2 className="card-title">Project information</h2>
                             <hr/>
-
-                            <p><strong>Category:</strong> App</p>
-                            
                             <p><strong>Date:</strong> {formattedDate}</p>
+                            <p><strong>Link:</strong> <a href={projectLink} target='_blank' className='text-blue-900'>Project Details</a></p>
                         </div>
                     </div>
 
@@ -117,32 +55,15 @@ const TaigaProjectDetails = () => {
                 </div>
             </div>
 
-            <div>
-                <p className='text-4xl font-bold pt-10'>Issues Tracker</p>
+            {project?.id
+                ?<div>
+                    <IssuesBoard project={project.id}/>
+                    <KanbanBoard project={project.id}/>
+                </div>
+                :<p></p>
+            }
 
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Priority</th>
-                            <th>Issue</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {projectIssues.map((issue) => (
-                            <tr>
-                                <th>{issue.type}</th>
-                                <th>{issue.priority}</th>
-                                <th>{issue.subject}</th>
-                                <th>{issue.status}</th>
-                            </tr>
-                        ))}
-
-                        
-                    </tbody>
-                </table>
-            </div>
+        
         </div>
     )
 }

@@ -1,15 +1,39 @@
 import { useState, useEffect } from 'react';
 
 const useLocalStorage = (storageKey) => {
-  const [value, setValue] = useState(
-    JSON.parse(localStorage.getItem(storageKey) ?? "{}")
-  );
+  const [value, setValue] = useState(() => {
+    const item = localStorage.getItem(storageKey);
+    return item ? JSON.parse(item) : null;
+  });
 
   useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(value));
-  }, [value, storageKey]);
+    const handleStorageChange = (event) => {
+      if (event.detail.key === storageKey) {
+        setValue(event.detail.value);
+      }
+    };
 
-  return [value, setValue];
+    window.addEventListener('local-storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('local-storage', handleStorageChange);
+    };
+  }, [storageKey]);
+
+  const setLocalStorageValue = (newValue) => {
+    setValue(newValue);
+    localStorage.setItem(storageKey, JSON.stringify(newValue));
+    window.dispatchEvent(
+      new CustomEvent('local-storage', {
+        detail: {
+          key: storageKey,
+          value: newValue,
+        },
+      })
+    );
+  };
+
+  return [value, setLocalStorageValue];
 };
 
-export default useLocalStorage
+export default useLocalStorage;

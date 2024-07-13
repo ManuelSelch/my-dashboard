@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
+import useLogin from './useLogin';
 import apiService from '../services/apiService';
 
-const useFetchIssues = () => {
+const useFetchIssues = (project) => {
     const [data, setData] = useState([]);
+    const {token} = useLogin(); 
 
     useEffect(() => {
         const fetchData = async () => {
-            const statusList = await apiService.get("issue-statuses");
-            const typeList = await apiService.get("issue-types");
-            const priorityList = await apiService.get("priorities");
-            const issues = await apiService.get("issues");
+            const statusList = await apiService.get("issue-statuses?project="+project, token);
+            const typeList = await apiService.get("issue-types", token);
+            const priorityList = await apiService.get("priorities", token);
+            const issues = await apiService.get("issues", token);
 
             const updatedIssues = issues.map(issue => {
                 const status = statusList.find(s => s.id === issue.status);
@@ -23,11 +25,12 @@ const useFetchIssues = () => {
                 };
             });
             setData(updatedIssues);
+            
         };
 
         fetchData();
 
-    }, []);
+    }, [token, project]);
 
     return data;
 };

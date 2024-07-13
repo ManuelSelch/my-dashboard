@@ -6,10 +6,10 @@ const ProjectCard = ({project}) => {
     <div className="flex flex-wrap w-1/3 max-lg:w-1/2 max-md:w-full p-1 md:p-2">
         <div className="card bg-base-100 w-96 shadow-xl mx-auto">
             <figure>
-                <img
-                    src={project.logo_big_url}
-                    alt='Project Logo'
-                />
+                {project.logo_big_url
+                ? <img src={project.logo_big_url} alt='Project Logo'/>
+                : <div></div>
+                }
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{project.name}</h2>
