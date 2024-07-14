@@ -1,0 +1,10 @@
+{
+    "projects": [
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://static4.depositphotos.com/1013501/430/i/450/depositphotos_4308060-stock-photo-project.jpg" },
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://wcs.smartdraw.com/working-smarter/img/how-to-create-a-project-planning-map.svg?bn=15100111938" },
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://thumbs.dreamstime.com/b/projekt-konzept-auf-schwarzer-tafel-wiedergabe-d-79906734.jpg" },
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://cdn.prod.website-files.com/63c5e29f1b5bc83fe0af2489/6424d753f8eb7a9e69c372fc_Gantt%20Chart%20Online%20Software%20Instagantt%20Ideation%202.webp" },
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://www.projectaccelerator.co.uk/wp-content/uploads/2016/08/Project-Management.jpg" },
+        { "name": "Project 1", "slug": "project-1", "logo_big_url": "https://www.projectsmart.co.uk/img/project.png" }
+    ]
+}
