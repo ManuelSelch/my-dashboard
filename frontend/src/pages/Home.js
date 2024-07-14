@@ -32,7 +32,7 @@ const Home = () => {
       <div className='min-h-screen p-10'>
         <Heading>Projekte</Heading>
         
-        <div className="columns-1 md:columns-2 xl:columns-3 p-20 pt-10">
+        <div className="columns-1 md:columns-2 xl:columns-3 xl:p-20 md:p-10 pt-10">
           {config.projects.map(project => (
             <ProjectCard key={project.slug} project={project}/>
           ))}
