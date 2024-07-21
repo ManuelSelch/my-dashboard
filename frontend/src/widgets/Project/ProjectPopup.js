@@ -47,7 +47,7 @@ const ProjectPopup = ({popupData}) => {
   
       try {
         // You can write the URL of your server or any other endpoint used for file upload
-        const result = await fetch('http://localhost:5001/uploads', {
+        const result = await fetch(process.env.REACT_APP_BACKEND_URL + '/uploads', {
           method: 'POST',
           body: formData,
         });
