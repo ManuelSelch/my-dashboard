@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useLogin from './useLogin';
-import apiService from '../services/apiService';
+import taigaService from '../services/taigaService';
 
 const useFetchProjects = () => {
     const [data, setData] = useState([]);
@@ -8,7 +8,7 @@ const useFetchProjects = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const result = await apiService.get("projects", token);
+            const result = await taigaService.get("projects", token);
             setData(result);
         };
 

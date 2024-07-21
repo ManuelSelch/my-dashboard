@@ -1,0 +1,14 @@
+[
+  {
+    "name": "zrdz",
+    "desciption": "",
+    "slug": "zrdz",
+    "taigaSlug": null,
+    "description": "fgtfdasf",
+    "logo_big_url": "http://localhost:5001/uploads/zrdz.jpg",
+    "images": [
+      "http://localhost:5001/uploads/zrdz-1.jpg",
+      "http://localhost:5001/uploads/zrdz-2.jpg"
+    ]
+  }
+]

@@ -13,10 +13,10 @@ const useLocalStorage = (storageKey) => {
       }
     };
 
-    window.addEventListener('local-storage', handleStorageChange);
+    window.addEventListener('local-storage-'+storageKey, handleStorageChange);
 
     return () => {
-      window.removeEventListener('local-storage', handleStorageChange);
+      window.removeEventListener('local-storage-'+storageKey, handleStorageChange);
     };
   }, [storageKey]);
 
@@ -24,7 +24,7 @@ const useLocalStorage = (storageKey) => {
     setValue(newValue);
     localStorage.setItem(storageKey, JSON.stringify(newValue));
     window.dispatchEvent(
-      new CustomEvent('local-storage', {
+      new CustomEvent('local-storage-'+storageKey, {
         detail: {
           key: storageKey,
           value: newValue,

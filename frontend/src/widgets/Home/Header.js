@@ -1,16 +1,8 @@
 import React, { useState } from "react"
-import { Link } from 'react-router-dom';
-
-import useLogin from "../../hooks/useLogin";
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-  const { token, setToken } = useLogin();
-
-  const handleLogout = () => {
-    setToken(null);
-  };
-
 
   return (
     <>
@@ -23,12 +15,11 @@ const Header = () => {
             role="navigation"
           >
             {/*      <!-- Brand logo --> */}
-            <a
+            <div
               id="WindUI"
               aria-label="WindUI logo"
               aria-current="page"
               className="flex items-center gap-2 whitespace-nowrap py-3 text-lg focus:outline-none lg:flex-1"
-              href="javascript:void(0)"
             >
               <svg
                 width="300"
@@ -51,8 +42,8 @@ const Header = () => {
                   fill="rgba(255,255,255,.2)"
                 />
               </svg>
-              <Link className='btn btn-ghost text-xl' to="/">Manuel Selch</Link>
-            </a>
+              <Menu name="Manuel Selch" to="/" setToggle={setIsToggleOpen}/>
+            </div>
             {/*      <!-- Mobile trigger --> */}
             <button
               className={`relative order-10 block h-10 w-10 self-center lg:hidden
@@ -91,12 +82,8 @@ const Header = () => {
                   : "invisible opacity-0"
               }`}
             >
-                <Menu name="Projects" to="/projects"/>
-                {token
-                    ? <button className='btn btn-ghost text-xl ml-auto' onClick={handleLogout}>Logout</button> 
-                    : <Menu name="Login" to="/login"/>
-                }
                 
+                <Menu name="Login" to="/login" setToggle={setIsToggleOpen}/>
             </ul>
           </nav>
         </div>
@@ -106,19 +93,22 @@ const Header = () => {
   )
 };
 
-const Menu = ({active, name, to}) => {
-    return (
-        <li role="none" className="flex items-stretch">
-            <a
-                role="menuitem"
-                aria-haspopup="false"
-                className={`${active && "text-emerald-500 "} flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8`}
-                href="javascript:void(0)"
-            >
-                <Link className='btn btn-ghost text-xl' to={to}>{name}</Link>
-            </a>
-        </li>
-    );
+const Menu = ({name, to, setToggle}) => {
+  const location = useLocation();
+
+  return (
+      <li role="none" className="flex items-stretch">
+          <p
+              role="menuitem"
+              aria-haspopup="false"
+              className={`${to === location.pathname && "text-emerald-500 "} flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:text-emerald-600 focus:outline-none focus-visible:outline-none lg:px-8`}
+          >
+              <Link className='btn btn-ghost text-xl' to={to}>
+                <span onClick={() => setToggle(false)}>{name}</span>
+              </Link>
+          </p>
+      </li>
+  );
 };
 
 

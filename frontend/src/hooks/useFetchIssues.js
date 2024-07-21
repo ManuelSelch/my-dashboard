@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useLogin from './useLogin';
-import apiService from '../services/apiService';
+import taigaService from '../services/taigaService';
 
 const useFetchIssues = (project) => {
     const [data, setData] = useState([]);
@@ -8,10 +8,10 @@ const useFetchIssues = (project) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const statusList = await apiService.get("issue-statuses?project="+project, token);
-            const typeList = await apiService.get("issue-types", token);
-            const priorityList = await apiService.get("priorities", token);
-            const issues = await apiService.get("issues", token);
+            const statusList = await taigaService.get("issue-statuses?project="+project, token);
+            const typeList = await taigaService.get("issue-types", token);
+            const priorityList = await taigaService.get("priorities", token);
+            const issues = await taigaService.get("issues?project="+project, token);
 
             const updatedIssues = issues.map(issue => {
                 const status = statusList.find(s => s.id === issue.status);

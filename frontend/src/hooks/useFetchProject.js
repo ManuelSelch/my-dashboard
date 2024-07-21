@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import useLogin from './useLogin';
-import apiService from '../services/apiService';
+import taigaService from '../services/taigaService';
 
 const useFetchProject = (slug) => {
     const [data, setData] = useState({});
@@ -8,8 +8,12 @@ const useFetchProject = (slug) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            if(slug === null) {
+                return;
+            }
+            
             const encodedValue = encodeURIComponent(slug);
-            const result = await apiService.get("projects/by_slug?slug="+encodedValue, token);
+            const result = await taigaService.get("projects/by_slug?slug="+encodedValue, token);
             setData(result);
         };
 

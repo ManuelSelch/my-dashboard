@@ -1,4 +1,4 @@
-import apiService from '../services/apiService';
+import taigaService from '../services/taigaService';
 import useLocalStorage from './useLocalStorage';
 
 const useLogin = () => {
@@ -6,7 +6,7 @@ const useLogin = () => {
 
     const login = async (username, password) => {
 
-        const result = await apiService.post(
+        const result = await taigaService.post(
             "auth",
             {
                 username: username,
