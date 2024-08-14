@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import backendService from "../services/backendService";
+import projectsService from "../services/projectsService";
 
 const initialState = [];
 
@@ -14,20 +14,22 @@ const projectsFeature = createSlice({
     }
 });
 
-export function fetchProjects() {
-    return async function run(dispatch, getState) {
-        const projects = await backendService.get("projects");
-        dispatch(setProjects(projects));
+export const thunks = {
+    fetchProjects: () => {
+        return async function run(dispatch, _) {
+            const projects = await projectsService.getAll()
+            dispatch(actions.setProjects(projects));
+        }
+    },
+
+    deleteProject: (slug) => {
+        return async function run(dispatch, _) {
+            await projectsService.delete(slug)
+            const projects = await projectsService.getAll()
+            dispatch(actions.setProjects(projects));
+        }
     }
 }
 
-export function deleteProject(slug) {
-    return async function run(dispatch, getState) {
-        await backendService.delete("projects/"+slug);
-        const projects = await backendService.get("projects");
-        dispatch(setProjects(projects));
-    }
-}
-
-export const {setProjects} = projectsFeature.actions;
+export const actions = projectsFeature.actions;
 export default projectsFeature.reducer;

@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-import authService from "../services/authService";
+import userService from "../services/userService";
 
 const initialState = {
     username: "",
@@ -9,7 +9,7 @@ const initialState = {
     isAdmin: false
 };
 
-const user = createSlice({
+const userFeature = createSlice({
     name: "user",
     initialState: initialState,
     reducers: {
@@ -26,16 +26,15 @@ const user = createSlice({
     }
 });
 
-function checkLogin() {
-    return async function run(dispatch, getState) {
-        const state = getState().user;
-        const result = authService.checkLogin(state.username, state.password);
-        dispatch(actions.loginSuccess(result.auth_token))
-    };
+export const thunks = {
+    checkLogin: () => {
+        return async function run(dispatch, getState) {
+            const state = getState().user;
+            const result = userService.checkLogin(state.username, state.password);
+            dispatch(actions.loginSuccess(result.auth_token))
+        }
+    }
 };
 
-
-export const actions = user.actions
-export const thunks = { checkLogin }
-
-export default user.reducer;
+export const actions = userFeature.actions
+export default userFeature.reducer;

@@ -1,7 +1,7 @@
-import taigaService from "./taigaService";
+import taiga from "./backends/taigaBackend";
 
 async function checkLogin(username, password) {
-    return await taigaService.post(
+    return await taiga.post(
         "auth",
         {
             username: username,
@@ -11,4 +11,4 @@ async function checkLogin(username, password) {
     );
 };
 
-export default service = { checkLogin }
+export default { checkLogin }
