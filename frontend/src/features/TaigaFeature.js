@@ -3,7 +3,7 @@ import taigaService from "../services/taigaService";
 
 const initialState = {
     projects: [],
-    issues: [],
+    issues: [], 
     milestones: [],
     userStories: [],
     userStoryStatuses: []
@@ -31,56 +31,35 @@ const taiga = createSlice({
     }
 });
 
-export function fetchProjects() {
-    return async function run(dispatch, getState) {
-        const projects = taigaService.get("projects");
-        dispatch(setProjects(projects));
-    };
-};
+export const thunks = {
+    fetchProjects: () => {
+        return async function run(dispatch, _) {
+            const projects = taigaService.getProjects();
+            dispatch(actions.setProjects(projects));
+        };
+    },
 
-export function fetchIssues(project) {
-    return async function run(dispatch, getState) {
-        const statusList = await taigaService.get("issue-statuses?project="+project);
-        const typeList = await taigaService.get("issue-types");
-        const priorityList = await taigaService.get("priorities");
-        const issues = await taigaService.get("issues?project="+project);
+    fetchIssues: (project) => {
+        return async function run(dispatch, _) {
+            const issues = await taigaService.getIssues(project);
+            dispatch(actions.setIssues(issues));
+        }
+    },
 
-        const updatedIssues = issues.map(issue => {
-            const status = statusList.find(s => s.id === issue.status);
-            const type = typeList.find(s => s.id === issue.type);
-            const priority = priorityList.find(s => s.id === issue.priority);
-            return {
-                ...issue,
-                status: status ? status.name : 'unknown',
-                type: type ? type.name : 'unknown',
-                priority: priority ? priority.name : 'unknown'
-            };
-        });
+    fetchUserStories: (project) => {
+        return async function run(dispatch, _) {
+            const userStories = await taigaService.getUserStories(project)
+            dispatch(actions.setUserStories(userStories));
+        }
+    },
 
-        dispatch(setIssues(updatedIssues));
+    fetchUserStoryStatuses: (project) => {
+        return async function run(dispatch, _) {
+            const userStoryStatuses = await taigaService.getUserStoryStatuses(project)
+            dispatch(actions.setUserStoryStatuses(userStoryStatuses));
+        }
     }
 }
 
-export function fetchMilestones(project) {
-    return async function run(dispatch, getState) {
-        const milestones = await taigaService.get("milestones?project="+project);
-        dispatch(setMilestones(milestones));
-    };
-};
-
-export function fetchUserStories(project) {
-    return async function run(dispatch, getState) {
-        const userStories = await taigaService.get("userstories?project="+project);
-        dispatch(setUserStories(userStories));
-    }
-}
-
-export function fetchUserStoryStatuses(project) {
-    return async function run(dispatch, getState) {
-        const userStoryStatuses = await taigaService.get("userstory-statuses?project="+project);
-        dispatch(setUserStoryStatuses(userStoryStatuses));
-    }
-}
-
-export const {setProjects, setIssues, setMilestones, setUserStories, setUserStoryStatuses} = taiga.actions;
+export const actions = taiga.actions;
 export default taiga.reducer;
