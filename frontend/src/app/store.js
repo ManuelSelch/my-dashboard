@@ -1,19 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { devToolsEnhancer } from '@redux-devtools/remote';
 
-import home from '../features/home/HomeFeature';
-import project from "../features/project/ProjectFeature";
-import projects from '../features/projects/ProjectsFeature';
-import taiga from '../features/taiga/TaigaFeature';
-import login from '../features/login/LoginFeature';
+import user from '../features/UserFeature';
 
 const store = configureStore({
   reducer: {
-    home: home,
-    project: project,
-    projects: projects,
-    taiga: taiga,
-    login: login,
+    user: user
   },
   devTools: false,
   enhancers: (getDefaultEnhancers) => getDefaultEnhancers().concat(

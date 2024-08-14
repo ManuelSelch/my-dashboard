@@ -1,7 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-// services
-import auth from "../services/authService";
+import authService from "../services/authService";
 
 const initialState = {
     username: "",
@@ -11,7 +10,7 @@ const initialState = {
 };
 
 const user = createSlice({
-    name: "login",
+    name: "user",
     initialState: initialState,
     reducers: {
         updateUsername: (state, action) => {
@@ -27,7 +26,16 @@ const user = createSlice({
     }
 });
 
+function checkLogin() {
+    return async function run(dispatch, getState) {
+        const state = getState().user;
+        const result = authService.checkLogin(state.username, state.password);
+        dispatch(actions.loginSuccess(result.auth_token))
+    };
+};
 
 
-export const actions = user.actions;
+export const actions = user.actions
+export const thunks = { checkLogin }
+
 export default user.reducer;
