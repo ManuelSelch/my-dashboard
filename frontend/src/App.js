@@ -7,14 +7,14 @@ import Header from './widgets/Home/Header';
 import ActionButtons from "./widgets/Common/ActionButtons";
 
 // features
-import Home from './features/home/Home';
-import ProjectDetails from './features/project/ProjectDetails';
-import ProjectPopup from "./features/project/ProjectPopup";
-import Login from './features/login/Login';
+import Home from './modules/home/Home';
+import ProjectDetails from './modules/project/ProjectDetails';
+import ProjectPopup from "./modules/project/ProjectPopup";
+import Login from './modules/login/Login';
 import Footer from './widgets/Home/Footer';
 
 // actions
-import { initApp, toggleEditMode } from "./features/home/HomeFeature";
+import { initApp, toggleEditMode } from "./modules/home/HomeFeature";
 
 const App = () => {
     const isShowing = useSelector((state) => state.project.isShowing)
