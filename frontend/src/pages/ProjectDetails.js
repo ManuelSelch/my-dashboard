@@ -241,10 +241,21 @@ const ProjectInfos = ({project, slug, isEditMode, updateDescription}) => {
 
 const Slider = ({images}) => {
     return (
-        <Splide aria-label="My Favorite Images">
+        <Splide 
+            options={{
+                type: "loop",
+                arrows: false,
+                pagination: false,
+                breakpoints: {
+                  1000: {
+                    perPage: 1,
+                  },
+                },
+            }}
+        >
             {images.map(image => (
-                <SplideSlide>
-                    <img key={image} src={image} alt="Image 1" className='max-h-[80vh] m-auto'/>
+                <SplideSlide key={image}>
+                    <img src={image} alt="Image 1" className='max-h-[80vh] m-auto'/>
                 </SplideSlide>
             ))}
         </Splide>
