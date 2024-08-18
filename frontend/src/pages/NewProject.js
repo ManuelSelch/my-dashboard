@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 
@@ -20,7 +20,7 @@ const NewProject = () => {
         name: "",
         desciption: "",
         slug: "",
-        taigaSlug: null,
+        taigaProject: null,
         images: []
     });
     const [isChange, setChange] = useState(false)
@@ -106,7 +106,7 @@ const NewProject = () => {
             <Input 
                 name="Description" 
                 value={project.description} 
-                setValue={(s) => s.updateDescription(s)}
+                setValue={(s) => updateDescription(s)}
             />
             <Dropdown 
                 items={projects} 

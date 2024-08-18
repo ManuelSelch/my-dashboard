@@ -34,31 +34,38 @@ const taiga = createSlice({
 export const thunks = {
     fetchProjects: () => {
         return async function run(dispatch, _) {
-            const projects = taigaService.getProjects();
+            const projects = await taigaService.getProjects();
             dispatch(actions.setProjects(projects));
         };
     },
 
-    fetchIssues: (project) => {
+    fetchIssues: () => {
         return async function run(dispatch, _) {
-            const issues = await taigaService.getIssues(project);
+            const issues = await taigaService.getIssues();
             dispatch(actions.setIssues(issues));
         }
     },
 
-    fetchUserStories: (project) => {
+    fetchUserStories: () => {
         return async function run(dispatch, _) {
-            const userStories = await taigaService.getUserStories(project)
+            const userStories = await taigaService.getUserStories()
             dispatch(actions.setUserStories(userStories));
         }
     },
 
-    fetchUserStoryStatuses: (project) => {
+    fetchUserStoryStatuses: () => {
         return async function run(dispatch, _) {
-            const userStoryStatuses = await taigaService.getUserStoryStatuses(project)
+            const userStoryStatuses = await taigaService.getUserStoryStatuses()
             dispatch(actions.setUserStoryStatuses(userStoryStatuses));
         }
-    }
+    },
+
+    fetchMilestones: () => {
+        return async function run(dispatch, _) {
+            const milestones = await taigaService.getMilestones()
+            dispatch(actions.setMilestones(milestones));
+        }
+    },
 }
 
 export const actions = taiga.actions;

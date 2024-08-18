@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +17,7 @@ import { actions as userActions } from './features/UserFeature';
 import { thunks as projectThunks } from './features/ProjectsFeature';
 
 const App = () => {
+    const [isInit, setInit] = useState(false);
     const isAdmin = useSelector((state) => state.user.isAdmin)
 
     const dispatch = useDispatch();
@@ -24,8 +25,12 @@ const App = () => {
     const previousLocation = location.state?.previousLocation;
 
     useEffect(() => {
+        if(isInit)
+            return;
+
         dispatch(projectThunks.fetchProjects());
-    })
+        setInit(true);
+    }, [isInit, dispatch])
 
     useEffect(() => {
         if (previousLocation) {

@@ -1,33 +1,9 @@
 import React from "react";
-import Chart from "react-apexcharts";
 
-import useFetchMilestones from '../../hooks/useFetchMilestones';
 
-const options = {
-    colors : ['#758694', '#9CDBA6', '#E90074'],
-    chart: {
-        type: 'area',
-        id: "backlog"
-    },
-
-    stroke: {
-        curve: 'straight'
-    },
-
-    dataLabels: {
-        enabled: false,
-    },
-
-    xaxis: {
-       
-    },
-
-    
-}
-
-const Burndown = ({project, total_milestones, total_story_points}) => {
-    const milestones = useFetchMilestones(project);
-
+const Burndown = ({project, milestones}) => {
+    const total_story_points = project.total_story_points;
+    const total_milestones = project.total_milestones;
     const milestoneValues = milestones.map(m => m.closed_points ?? 0).reverse();
     const milestoneValuesBurndown = []
 
@@ -61,7 +37,7 @@ const Burndown = ({project, total_milestones, total_story_points}) => {
 
     return (
         <Chart
-            options={options}
+            options={burndownChartConfig}
             series={series}
             type="area"
             width="500"

@@ -2,14 +2,14 @@ import taiga from "./backends/taigaBackend";
 
 const service = {
     getProjects: async () => {
-        return taiga.get("projects");
+        return await taiga.get("projects");
     },
 
-    getIssues: async (project) => {
-        const statusList = await taiga.get("issue-statuses?project="+project);
+    getIssues: async () => {
+        const statusList = await taiga.get("issue-statuses");
         const typeList = await taiga.get("issue-types");
         const priorityList = await taiga.get("priorities");
-        const issues = await taiga.get("issues?project="+project);
+        const issues = await taiga.get("issues");
 
         const issuesDTO = issues.map(issue => {
             const status = statusList.find(s => s.id === issue.status);
@@ -26,12 +26,16 @@ const service = {
         return issuesDTO;
     },
 
-    getUserStories: async (project) => {
-        return await taiga.get("userstories?project="+project);
+    getUserStories: async () => {
+        return await taiga.get("userstories");
     },
 
-    getUserStoryStatuses: async (project) => {
-        return await taiga.get("userstory-statuses?project="+project);
+    getUserStoryStatuses: async () => {
+        return await taiga.get("userstory-statuses");
+    },
+
+    getMilestones: async () => {
+        return await taiga.get("milestones");
     }
 }
 

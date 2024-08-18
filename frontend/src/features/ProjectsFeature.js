@@ -24,7 +24,6 @@ export const thunks = {
 
     createProject: (project, file) => {
         return async function run(dispatch, getState) {
-            var project = project;
             project.slug = project.name.replace(/\s+/g, '-').toLowerCase() 
             if(file) {
                 const imgName = project.slug + ".jpg";
