@@ -1,5 +1,5 @@
 import React from "react";
-
+import Chart from "react-apexcharts";
 
 const Burndown = ({project, milestones}) => {
     const total_story_points = project.total_story_points;
