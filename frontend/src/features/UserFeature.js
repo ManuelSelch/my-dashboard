@@ -7,7 +7,7 @@ const initialState = {
     password: "",
     token: null,
 
-    isAdmin: true,
+    isAdmin: false,
     isEditMode: false
 };
 
