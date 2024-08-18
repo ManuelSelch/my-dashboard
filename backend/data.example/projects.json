@@ -1,1 +1,24 @@
-[]
+[
+    {
+      "name": "Business to go",
+      "description": "<p><strong>businessToGo</strong> ist Ihre mobile Lösung für effizientes Zeit- und Projektmanagement.&nbsp;</p><p>Verbinden Sie sich mit Ihrem privaten Server und nutzen Sie die Tools <strong>Kimai</strong> und <strong>Taiga</strong> überall und jederzeit.&nbsp;</p><p>Die App funktioniert offline und synchronisiert sich automatisch mit Ihrem Server, damit Sie immer produktiv bleiben können.</p></p>",
+      "slug": "business-to-go",
+      "taigaProject": 7,
+      "links": [
+        {
+          "name": "Taiga",
+          "url": "https://project.manuelselch.de/business-to-go"
+        },
+        {
+          "name": "GitHub",
+          "url": "https://github.com/manuelselch/businesstogo"
+        }
+      ],
+      "logo_big_url": "http://dashboard.dev.manuelselch.de/backend/uploads/business-to-go.jpg",
+      "images": [
+        "http://dashboard.dev.manuelselch.de/backend/uploads/business-to-go-0.jpg",
+        "http://dashboard.dev.manuelselch.de/backend/uploads/business-to-go-1.jpg",
+        "http://dashboard.dev.manuelselch.de/backend/uploads/business-to-go-2.jpg"
+      ]
+    }
+  ]
