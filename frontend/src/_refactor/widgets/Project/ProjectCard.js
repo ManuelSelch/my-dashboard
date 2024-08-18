@@ -6,7 +6,7 @@ const ProjectCard = ({project, isEditMode, handleEditProject, handleDeleteProjec
   return (
     <div className='pb-5' >
       <div className="relative overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200">
-          <Link className='pb-5' to={`/project/${project.slug}`} >
+          <Link className='pb-5' to={`/projects/${project.slug}`} >
             <figure>
               {project.logo_big_url
               ? <img src={project.logo_big_url} className='w-full' alt='Project Logo'/>

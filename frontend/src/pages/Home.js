@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
 // feature
@@ -13,6 +13,7 @@ const Home = () => {
     const user = useSelector((state) => state.user);
     const projects = useSelector((state) => state.projects);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     return (
         <div>
@@ -23,7 +24,10 @@ const Home = () => {
                     <div className="flex justify-between">
                         <p>Projekte</p>
                         {user.isEditMode &&
-                            <ActionButtons icon="fa-plus" position="block" onClick={() => {}}/> // dispatch(actions.createProject())
+                            <Link to="/projects/new" state={{previousLocation: location}}>
+                                <ActionButtons icon="fa-plus" position="block"/> 
+                            </Link>
+                            // dispatch(actions.createProject())
                         }
                     </div>
                 </Heading>
@@ -69,7 +73,7 @@ const ProjectCard = ({project, isEditMode, handleEditProject, handleDeleteProjec
     return (
         <div className='pb-5' >
         <div className="relative overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200">
-            <Link className='pb-5' to={`/project/${project.slug}`} >
+            <Link className='pb-5' to={`/projects/${project.slug}`} >
                 <figure>
                 {project.logo_big_url
                 ? <img src={project.logo_big_url} className='w-full' alt='Project Logo'/>
@@ -78,7 +82,7 @@ const ProjectCard = ({project, isEditMode, handleEditProject, handleDeleteProjec
                 </figure>
             </Link>
             <div className="p-6 text-center">
-                <Link to={`/project/${project.slug}`} className="text-xl font-medium text-slate-700 text-center">
+                <Link to={`/projects/${project.slug}`} className="text-xl font-medium text-slate-700 text-center">
                     {project.name}
                 </Link>
             </div>

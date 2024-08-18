@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
 import Glide from "@glidejs/glide"
@@ -11,30 +11,58 @@ import Body from '../common/Body';
 import TextArea from "../common/TextArea";
 
 // feature
-import {actions, thunks} from '../features/ProjectFeature';
+import {actions, thunks} from '../features/ProjectsFeature';
 
 const ProjectDetails = () => {
+    const { slug } = useParams();
+
     const isEditMode = useSelector((state) => state.user.isEditMode);
     const projects = useSelector((state) => state.projects);
-    const projectDetails = useSelector((state) => state.project);
-    
-
+    const [project, setProject] = useState(null);
+    const [isChange, setChange] = useState(false);
     const dispatch = useDispatch();
 
-    const { slug } = useParams();
-    const project = projects.find((p) => p.slug === slug)
-
     useEffect(() => {
-        if(!project)
+        if(project)
             return;
 
-        if(projectDetails.project && projectDetails.project.slug === project.slug)
-            return;
-
-        dispatch(actions.viewProject(project));
+        setProject(projects.find((p) => p.slug === slug))
     })
 
-    if(projectDetails.project) {
+    function updateDescription(desciption) {
+        const updatedProject = {...project, desciption: desciption};
+        setProject(updatedProject);
+        setChange(true);
+    }
+
+    async function addSliderImage(file) {
+        await dispatch(thunks.uploadSliderImage(project, file));
+
+        const imgName = project.slug + "-" + project.images.length + ".jpg";
+        const imgPath = process.env.REACT_APP_BACKEND_URL + "/uploads/" + imgName;
+        let images = [...project.images];
+        images.push(imgPath);
+
+        const updatedProject = {...project, images: images};
+        setProject(updatedProject);
+        setChange(true);
+    }
+
+    function deleteSliderImage(index) {
+        let images = [...project.images];
+        images.splice(index, 1);
+
+        var updatedProject = {...project, images: images};
+        setProject(updatedProject);
+        setChange(true);
+    }
+
+    function saveProject() {
+        dispatch(thunks.updateProject(project))
+        setChange(false);
+    }
+
+    if(project) {
         return(
             <Body>
                 <Heading>{project.name}</Heading>
@@ -42,21 +70,27 @@ const ProjectDetails = () => {
                 <div className="grid grid-cols-2 max-lg:grid-cols-1 pt-10">
                     <div className="p-5 object-none object-center bottom-0">
                         {isEditMode
-                        ? <AdminSlider />
-                        : <div>{projectDetails.project.images?.length > 0 && <Slider images={projectDetails.project.images}/>}</div>
+                        ? 
+                        <AdminSlider 
+                            project={project}
+                            addSliderImage={(file) => addSliderImage(file)}
+                            deleteSliderImage={(index) => deleteSliderImage(index)}
+                        />
+                        : 
+                        <div>{project.images.length > 0 && <Slider images={project.images}/>}</div>
                         }
                     </div>
 
                     <div>
-                        <ProjectInfos />
+                        <ProjectInfos project={project} isEditMode={isEditMode} updateDescription={(s) => updateDescription(s)}/>
                     </div>
                 </div>
 
                 {isEditMode &&                
                     <Button 
                         name="Save" 
-                        onClick={() => dispatch(thunks.saveProject())} 
-                        disabled={!projectDetails.isChange}
+                        onClick={saveProject} 
+                        disabled={!isChange}
                     />
                 }
 
@@ -68,19 +102,16 @@ const ProjectDetails = () => {
     return(<div></div>);
 };
 
-const AdminSlider = () => {
-    const project = useSelector((state) => state.project.project);
-    const dispatch = useDispatch();
-
+const AdminSlider = ({project, addSliderImage, deleteSliderImage}) => {
     return (
         <div>
             {project.images && 
                 project.images.map((img, index) => (
-                    <AdminImage img={img} key={index} handleDeleteImage={() => dispatch(actions.deleteSliderImage(index))}/>
+                    <AdminImage img={img} key={index} handleDeleteImage={() => deleteSliderImage(index)}/>
                 ))
             }
 
-            <FileUpload file={null} setFile={(file) => dispatch(thunks.uploadSliderImage(file))}/>
+            <FileUpload file={null} setFile={(file) => addSliderImage(file)}/>
         </div>
     );
 };
@@ -101,13 +132,7 @@ const AdminImage = ({img, handleDeleteImage}) => {
     );
 };
 
-
-const ProjectInfos = () => {
-    const isEditMode = useSelector((state) => state.user.isEditMode);
-    const projectDetails = useSelector((state) => state.project);
-  
-    const dispatch = useDispatch();
-
+const ProjectInfos = ({project, isEditMode, updateDescription}) => {
     const date = new Date(null);
     const formattedDate = date.toLocaleDateString('de-DE', {
         year: 'numeric',
@@ -136,10 +161,10 @@ const ProjectInfos = () => {
                 {isEditMode
                     ? <TextArea 
                         name="Desciption" 
-                        value={projectDetails.project.description}
-                        setValue={(s) => dispatch(actions.updateDescription(s))}
+                        value={project.description}
+                        setValue={(s) => updateDescription(s)}
                     />
-                    : <div dangerouslySetInnerHTML={{__html: projectDetails.project.description}} />
+                    : <div dangerouslySetInnerHTML={{__html: project.description}} />
                 }
 
                 
@@ -182,7 +207,7 @@ const Slider = ({images}) => {
               <li key={index}>
                 <img
                   src={img}
-                  className="m-auto max-h-full w-full max-w-full"
+                  className="m-auto max-h-[80vh] max-w-full"
                   alt = "img"
                 />
               </li>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
 // common
@@ -9,7 +9,7 @@ import ActionButtons from "./common/ActionButtons";
 // features
 import Home from './pages/Home';
 import ProjectDetails from './pages/ProjectDetails';
-import Login from './pages/Login';
+import NewProject from './pages/NewProject';
 import Footer from './common/Footer';
 
 // actions
@@ -20,29 +20,43 @@ const App = () => {
     const isAdmin = useSelector((state) => state.user.isAdmin)
 
     const dispatch = useDispatch();
+    const location = useLocation();
+    const previousLocation = location.state?.previousLocation;
 
     useEffect(() => {
         dispatch(projectThunks.fetchProjects());
     })
+
+    useEffect(() => {
+        if (previousLocation) {
+            document.body.classList.add("overflow-y-hidden")
+        } else {
+            document.body.classList.remove("overflow-y-hidden")
+        }
+    });
     
     return(
         <div className='h-screen flex flex-col'>
-            <BrowserRouter>
-                <Header />
+            <Header />
 
-                <Routes>
+            <Routes location={previousLocation || location} >
                 <Route exact path="/" element={<Home/>} />
-                <Route path="/project/:slug" element={<ProjectDetails/>} />
-                <Route exact path="/login" element={<Login/>} />
-                </Routes>
+                <Route path="/projects/:slug" element={<ProjectDetails/>} />
+                <Route path="/projects/new" element={<NewProject/>} />
+            </Routes>
 
-                
-                {isAdmin &&
-                    <ActionButtons icon="fa-hammer" onClick={() => dispatch(userActions.toggleEditMode())} />
-                }
-                
-                <Footer />
-            </BrowserRouter> 
+            {previousLocation && (
+            <Routes>
+                <Route path="/projects/new" element={<NewProject />} />
+            </Routes>
+            )}
+
+            
+            {isAdmin &&
+                <ActionButtons icon="fa-hammer" onClick={() => dispatch(userActions.toggleEditMode())} />
+            }
+            
+            <Footer />
         </div>
     );
 }
