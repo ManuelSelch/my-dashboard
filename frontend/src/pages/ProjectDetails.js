@@ -132,7 +132,7 @@ const ProjectDetails = () => {
 
                 {taigaProject &&
                 <IssuesBoard
-                    issues={taiga.issues.filter((i) => i.project === taigaProject.id)}
+                    issues={taiga.issues.filter((i) => i.project === taigaProject.id && i.is_closed === false)}
                 />
                 }
 

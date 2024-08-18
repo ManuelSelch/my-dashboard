@@ -3,8 +3,6 @@ import React from "react";
 const KanbanBoard = ({stories, statuses}) => {
     return (
         <div className="p-2">
-            <p className="pt-10 text-4xl font-bold">Kanban Board</p>
-
             <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-5 pt-10">
                 {statuses.map((status) => (
                     <KanbanColumn key={status?.id ?? 0} status={status} stories={stories.filter(m => m.status === status?.id)}/>
