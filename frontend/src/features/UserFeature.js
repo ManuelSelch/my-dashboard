@@ -6,7 +6,9 @@ const initialState = {
     username: "",
     password: "",
     token: null,
-    isAdmin: false
+
+    isAdmin: false,
+    isEditMode: false
 };
 
 const userFeature = createSlice({
@@ -22,6 +24,9 @@ const userFeature = createSlice({
         loginSuccess: (state, action) => {
             state.isAdmin = true;
             state.token = action.payload;
+        },
+        toggleEditMode: (state, action) => {
+            state.isEditMode = !state.isEditMode;
         }
     }
 });

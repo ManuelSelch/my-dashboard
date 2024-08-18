@@ -1,6 +1,6 @@
 import taiga from "./backends/taigaBackend";
 
-export default {
+const service = {
     getProjects: async () => {
         return taiga.get("projects");
     },
@@ -27,10 +27,12 @@ export default {
     },
 
     getUserStories: async (project) => {
-        return await taigaService.get("userstories?project="+project);
+        return await taiga.get("userstories?project="+project);
     },
 
     getUserStoryStatuses: async (project) => {
-        return await taigaService.get("userstory-statuses?project="+project);
+        return await taiga.get("userstory-statuses?project="+project);
     }
 }
+
+export default service;

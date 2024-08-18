@@ -3,27 +3,26 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 
 // common
-import Header from './widgets/Home/Header';
-import ActionButtons from "./widgets/Common/ActionButtons";
+import Header from './common/Header';
+import ActionButtons from "./common/ActionButtons";
 
 // features
-import Home from './modules/home/Home';
-import ProjectDetails from './modules/project/ProjectDetails';
-import ProjectPopup from "./modules/project/ProjectPopup";
-import Login from './modules/login/Login';
-import Footer from './widgets/Home/Footer';
+import Home from './pages/Home';
+import ProjectDetails from './pages/ProjectDetails';
+import Login from './pages/Login';
+import Footer from './common/Footer';
 
 // actions
-import { initApp, toggleEditMode } from "./modules/home/HomeFeature";
+import { actions as userActions } from './features/UserFeature';
+import { thunks as projectThunks } from './features/ProjectsFeature';
 
 const App = () => {
-    const isShowing = useSelector((state) => state.project.isShowing)
-    const isAdmin = useSelector((state) => state.login.isAdmin)
+    const isAdmin = useSelector((state) => state.user.isAdmin)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(initApp());
+        dispatch(projectThunks.fetchProjects());
     })
     
     return(
@@ -37,12 +36,9 @@ const App = () => {
                 <Route exact path="/login" element={<Login/>} />
                 </Routes>
 
-                {isShowing &&
-                    <ProjectPopup />
-                }
                 
                 {isAdmin &&
-                    <ActionButtons icon="fa-hammer" onClick={() => dispatch(toggleEditMode())} />
+                    <ActionButtons icon="fa-hammer" onClick={() => dispatch(userActions.toggleEditMode())} />
                 }
                 
                 <Footer />
