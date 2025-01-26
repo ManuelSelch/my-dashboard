@@ -11,7 +11,7 @@ const PORT = 5001;
 
 
 app.use(cors({
-  origin: ['https://dashboard.dev.manuelselch.de', 'http://localhost:3000']
+  origin: ['https://dashboard.dev.manuelselch.de', 'http://localhost:30001']
 }));
 app.use(bodyParser.json());
 

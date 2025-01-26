@@ -1,0 +1,141 @@
+
+> my-dashboard@1.0.0 start:prod
+> concurrently "npm run start:backend" "npm run start:frontend:prod"
+
+[0] 
+[0] > my-dashboard@1.0.0 start:backend
+[0] > cd backend && npm start
+[0] 
+[1] 
+[1] > my-dashboard@1.0.0 start:frontend:prod
+[1] > cd frontend && npm run build && serve -s build
+[1] 
+[1] 
+[1] > my-dashboard@0.1.0 build
+[1] > react-scripts build
+[1] 
+[0] 
+[0] > backend@1.0.0 start
+[0] > node server.js
+[0] 
+[0] Server is running on http://localhost:5001
+[1] Creating an optimized production build...
+[1] Compiled with warnings.
+[1] 
+[1] [eslint] 
+[1] src/pages/ProjectDetails.js
+[1]   Line 22:7:    'burndownChartConfig' is assigned a value but never used                                                                                                                                         no-unused-vars
+[1]   Line 258:21:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1] 
+[1] src/services/userService.js
+[1]   Line 14:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+[1] 
+[1] Search for the keywords to learn more about each warning.
+[1] To ignore, add // eslint-disable-next-line to the line before.
+[1] 
+[1] File sizes after gzip:
+[1] 
+[1]   126.47 kB  build/static/js/main.68673fd9.js
+[1]   6.81 kB    build/static/css/main.ebfd966d.css
+[1] 
+[1] The project was built assuming it is hosted at /.
+[1] You can control this with the homepage field in your package.json.
+[1] 
+[1] The build folder is ready to be deployed.
+[1] You may serve it with a static server:
+[1] 
+[1]   serve -s build
+[1] 
+[1] Find out more about deployment here:
+[1] 
+[1]   https://cra.link/deployment
+[1] 
+[1] (node:2833269) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1]  INFO  Accepting connections at http://localhost:34567
+[0] npm run start:backend exited with code SIGTERM
+[1] 
+[1]  INFO  Gracefully shutting down. Please wait...
+[1] npm run start:frontend:prod exited with code SIGTERM
+
+> my-dashboard@1.0.0 start:prod
+> concurrently "npm run start:backend" "npm run start:frontend:prod"
+
+[0] 
+[0] > my-dashboard@1.0.0 start:backend
+[0] > cd backend && npm start
+[0] 
+[1] 
+[1] > my-dashboard@1.0.0 start:frontend:prod
+[1] > cd frontend && npm run build && serve -l 3001 -s build
+[1] 
+[0] 
+[0] > backend@1.0.0 start
+[0] > node server.js
+[0] 
+[1] 
+[1] > my-dashboard@0.1.0 build
+[1] > react-scripts build
+[1] 
+[0] node:events:498
+[0]       throw er; // Unhandled 'error' event
+[0]       ^
+[0] 
+[0] Error: listen EADDRINUSE: address already in use :::5001
+[0]     at Server.setupListenHandle [as _listen2] (node:net:1904:16)
+[0]     at listenInCluster (node:net:1961:12)
+[0]     at Server.listen (node:net:2063:7)
+[0]     at Function.listen (/root/my-dashboard/backend/node_modules/express/lib/application.js:635:24)
+[0]     at Object.<anonymous> (/root/my-dashboard/backend/server.js:22:5)
+[0]     at Module._compile (node:internal/modules/cjs/loader:1460:14)
+[0]     at Module._extensions..js (node:internal/modules/cjs/loader:1544:10)
+[0]     at Module.load (node:internal/modules/cjs/loader:1275:32)
+[0]     at Module._load (node:internal/modules/cjs/loader:1091:12)
+[0]     at wrapModuleLoad (node:internal/modules/cjs/loader:212:19)
+[0] Emitted 'error' event on Server instance at:
+[0]     at emitErrorNT (node:net:1940:8)
+[0]     at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+[0]   code: 'EADDRINUSE',
+[0]   errno: -98,
+[0]   syscall: 'listen',
+[0]   address: '::',
+[0]   port: 5001
+[0] }
+[0] 
+[0] Node.js v22.3.0
+[0] npm run start:backend exited with code 1
+[1] Creating an optimized production build...
+[1] Compiled with warnings.
+[1] 
+[1] [eslint] 
+[1] src/pages/ProjectDetails.js
+[1]   Line 22:7:    'burndownChartConfig' is assigned a value but never used                                                                                                                                         no-unused-vars
+[1]   Line 258:21:  Redundant alt attribute. Screen-readers already announce `img` tags as an image. You don’t need to use the words `image`, `photo,` or `picture` (or any specified custom words) in the alt prop  jsx-a11y/img-redundant-alt
+[1] 
+[1] src/services/userService.js
+[1]   Line 14:1:  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+[1] 
+[1] Search for the keywords to learn more about each warning.
+[1] To ignore, add // eslint-disable-next-line to the line before.
+[1] 
+[1] File sizes after gzip:
+[1] 
+[1]   126.47 kB  build/static/js/main.68673fd9.js
+[1]   6.81 kB    build/static/css/main.ebfd966d.css
+[1] 
+[1] The project was built assuming it is hosted at /.
+[1] You can control this with the homepage field in your package.json.
+[1] 
+[1] The build folder is ready to be deployed.
+[1] You may serve it with a static server:
+[1] 
+[1]   serve -s build
+[1] 
+[1] Find out more about deployment here:
+[1] 
+[1]   https://cra.link/deployment
+[1] 
+[1] (node:2869374) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[1] (Use `node --trace-deprecation ...` to show where the warning was created)
+[1]  INFO  Accepting connections at http://localhost:42573
+[1] npm run start:frontend:prod exited with code SIGTERM

@@ -6,7 +6,7 @@
     "start:prod": "concurrently \"npm run start:backend\" \"npm run start:frontend:prod\"",
     "start:backend": "cd backend && npm start",
     "start:frontend": "cd frontend && npm start",
-    "start:frontend:prod": "cd frontend && npm run build && serve -s build"
+    "start:frontend:prod": "cd frontend && npm run build && serve -l 3001 -s build"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
