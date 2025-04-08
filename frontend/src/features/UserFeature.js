@@ -17,10 +17,10 @@ const thunks = {
         return async (dispatch, getState)  => {
             try {
                 const result = await userService.checkLogin(username, password);
-                if (!result.auth_token) {
-                    dispatch(actions.loginSuccess(result.auth_token))
-                }
-                return result.auth_token;
+                if (result.auth_token) 
+                    dispatch(actions.loginSuccess(result.auth_token));
+                else 
+                    dispatch(actions.loginError("invalid credentials"));
             } catch (error) {
                 dispatch(actions.loginError(error))
             }

@@ -1,31 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { actions } from '../features/UserFeature';
-import useLocalStorage from '../_refactor/hooks/useLocalStorage';
 import Input from '../common/Input';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
-    const [username, setUsername] = useLocalStorage("username");
-    const [password, setPassword] = useLocalStorage("password");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const user = useSelector((state) => state.user);
 
-    /*
     useEffect(() => {
-        if (isAuthenticated) {
+        if (user.isAdmin) {
             navigate('/dashboard'); // Redirect on successful login
         }
-    }, [isAuthenticated, navigate]);
-    */
+    }, [user, navigate]);
+    
 
     const handleLogin = async (e) => {
         e.preventDefault();
     
         if (username !== '' && password !== '') {
-            dispatch(actions.checkLogin({username, password}));
+            dispatch(actions.checkLogin(username, password));
         } else {
           alert('Please enter username and password');
         }
