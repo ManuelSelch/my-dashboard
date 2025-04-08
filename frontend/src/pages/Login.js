@@ -3,19 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { actions } from '../features/UserFeature';
 import Input from '../common/Input';
 import { useDispatch, useSelector } from 'react-redux';
+import useLocalStorage from '../_refactor/hooks/useLocalStorage';
 
 const Login = () => {
+    const [token, _] = useLocalStorage("token");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
-        if (user.isAdmin) {
-            navigate('/dashboard'); // Redirect on successful login
+        if (token) {
+            navigate('/');
         }
-    }, [user, navigate]);
+    }, [token, navigate]);
     
 
     const handleLogin = async (e) => {

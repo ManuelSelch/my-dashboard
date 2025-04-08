@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
 // feature
@@ -8,12 +8,21 @@ import {thunks as projectThunks} from '../features/ProjectsFeature';
 // common
 import Heading from '../common/Heading';
 import ActionButtons, {ActionOption} from '../common/ActionButtons';
+import useLocalStorage from "../_refactor/hooks/useLocalStorage";
 
 const Home = () => {
+    const [token, _] = useLocalStorage("token");
     const user = useSelector((state) => state.user);
     const projects = useSelector((state) => state.projects);
-    const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+    }, [user, navigate]);
 
     return (
         <div>
