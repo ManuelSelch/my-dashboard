@@ -4,9 +4,12 @@
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:prod": "concurrently \"npm run start:backend\" \"npm run start:frontend:prod\"",
+    
     "start:backend": "cd backend && npm start",
     "start:frontend": "cd frontend && npm start",
-    "start:frontend:prod": "cd frontend && npm run build && serve -l 3001 -s build"
+    "start:frontend:prod": "cd frontend && npm run build && serve -l 3001 -s build",
+
+    "deploy": "pm2 start ./scripts/run.sh --name dashboard --restart-delay 20000"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
