@@ -4,8 +4,7 @@ async function checkLogin(username, password) {
     return await taiga.post(
         "auth",
         {
-            username: username,
-            password: password,
+            username, password,
             type: "normal"
         }
     );

@@ -8,6 +8,7 @@ import ActionButtons from "./common/ActionButtons";
 
 // features
 import Home from './pages/Home';
+import Login from "./pages/Login";
 import ProjectDetails from './pages/ProjectDetails';
 import NewProject from './pages/NewProject';
 import Footer from './common/Footer';
@@ -46,6 +47,7 @@ const App = () => {
 
             <Routes location={previousLocation || location} >
                 <Route exact path="/" element={<Home/>} />
+                <Route exact path="/login" element={<Login/>} />
                 <Route path="/projects/:slug" element={<ProjectDetails/>} />
                 <Route path="/projects/new" element={<NewProject/>} />
             </Routes>

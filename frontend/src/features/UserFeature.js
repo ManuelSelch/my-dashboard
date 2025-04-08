@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
 import userService from "../services/userService";
 
@@ -8,8 +8,25 @@ const initialState = {
     token: null,
 
     isAdmin: false,
-    isEditMode: false
+    isEditMode: false,
+    error: null
 };
+
+const thunks = {
+    checkLogin(username, password) {
+        return async (dispatch, getState)  => {
+            try {
+                const result = await userService.checkLogin(username, password);
+                if (!result.auth_token) {
+                    dispatch(actions.loginSuccess(result.auth_token))
+                }
+                return result.auth_token;
+            } catch (error) {
+                dispatch(actions.loginError(error))
+            }
+        }
+    }
+}
 
 const userFeature = createSlice({
     name: "user",
@@ -21,25 +38,20 @@ const userFeature = createSlice({
         updatePassword: (state, action) => {
             state.password = action.payload;
         },
+
         loginSuccess: (state, action) => {
             state.isAdmin = true;
             state.token = action.payload;
         },
+        loginError: (state, action) => {
+            state.error = action.payload;
+        },
+
         toggleEditMode: (state, action) => {
             state.isEditMode = !state.isEditMode;
         }
     }
 });
 
-export const thunks = {
-    checkLogin: () => {
-        return async function run(dispatch, getState) {
-            const state = getState().user;
-            const result = userService.checkLogin(state.username, state.password);
-            dispatch(actions.loginSuccess(result.auth_token))
-        }
-    }
-};
-
-export const actions = userFeature.actions
+export const actions = {...userFeature.actions, ...thunks}
 export default userFeature.reducer;
